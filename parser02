@@ -1,0 +1,91 @@
+$resultsArray = array();
+$resultsArray1 =array();
+        $file = fopen("/home/pi/Downloads/ausgabe18.txt","r");
+		
+        while(! feof($file))
+        {
+			$line = fgets($file, 4096);
+			$resultsArray[] = $line;
+			
+			
+		}
+	    
+		foreach($resultsArray as $val) {
+           
+			$temp[] =($val{0}.$val{1}.$val{2}.$val{3});
+			$result[] = $val;
+
+			};	
+
+		
+
+	for ($i=0; $i<count($temp); $i++){
+		if (is_numeric($temp[$i])){
+		
+		$test[$i] =  '"'. trim($result[$i]). "#";
+		
+	
+	}}
+
+	
+
+ 
+
+
+
+
+	for ($i=0; $i<count($test); $i++)
+
+	{   
+
+		
+		#$test3[$i] = trim(preg_replace('/\s+/', '";"', $test[$i]));
+
+		If ( stristr($test[$i], '  ') == true){
+		$test3[$i] = str_replace('  ', '++', $test[$i]);}
+
+		
+	}
+
+
+
+
+	
+	for ($i=0; $i<count($test3); $i++)
+	{
+	 #$test3[$i] = str_replace(' ','";"', $test2[$i]);
+	  $test4[$i] = str_replace('++','";"', $test3[$i]);
+	 # $test5[$i] = str_replace('+','";"', $test4[$i]);
+
+	  $test8[$i] = str_replace('";"";"";"',' ', $test4[$i]);
+	  $test9[$i] = str_replace('";"";"','";"', $test8[$i]);
+	  $test10[$i] = str_replace('";"";"','";"', $test9[$i]);
+	 
+	    If ( strstr ($test10[$i], (stristr($test10[$i], '  '))) == true){
+		$test11[$i] = str_replace('  ', '";"', $test10[$i]);}
+
+		
+		$test12[$i] = (str_replace( strstr($test11[$i] ,' ', true), '"'.$temp[$i].'";"', $test11[$i]));
+		$test14[$i] = str_replace('";"";"','";"', $test12[$i]);
+		$test15[$i] = str_replace('";" ";"','";"', $test14[$i]);
+		$test16[$i] = str_replace('";"";"','";"', $test15[$i]);
+		$test17[$i] = str_replace('";"";"','";"', $test16[$i]);
+		$test1[$i] = str_replace('#','"<br>', $test17[$i]);
+	}
+
+	
+
+
+
+	for ($i=0; $i<count($test1); $i++){
+		echo $test1[$i] ;
+		
+	}
+
+
+	$fp = fopen('/home/pi/Downloads/test.csv', 'a');
+	fputcsv($fp, $test);
+    fclose($fp); 
+    
+
+		echo "Ende";
